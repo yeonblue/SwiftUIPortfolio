@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>6B5C8795-94CF-4757-84AA-8A262B95E3F6</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>6B5C8795-94CF-4757-84AA-8A262B95E3F6.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>signature</key>
+			<string>eyJ0eXBlIjp7ImJsdWVwcmludFByb3ZpZGVyIjp7fX0sImJsdWVwcmludFByb3ZpZGVyX3Byb3ZpZGVyRmlsZVBhdGhTdHJpbmciOiJcL1VzZXJzXC9jaG9pc2VveWVvblwvRGVza3RvcFwvaU9TIFByb2plY3RcL1N3aWZ0VUlQb3J0Zm9saW9cL1N3aWZ0VUlQb3J0Zm9saW8ueGNvZGVwcm9qIn0=</string>
+			<key>timeStartedRecording</key>
+			<real>698027647.53069401</real>
+			<key>timeStoppedRecording</key>
+			<real>63113904000</real>
+			<key>title</key>
+			<string>Build for Previews SwiftUIPortfolio</string>
+			<key>uniqueIdentifier</key>
+			<string>6B5C8795-94CF-4757-84AA-8A262B95E3F6</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
