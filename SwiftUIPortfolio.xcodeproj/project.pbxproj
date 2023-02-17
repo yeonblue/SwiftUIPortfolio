@@ -16,6 +16,8 @@
 		45937FB7299B5C73002F54DD /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FB6299B5C73002F54DD /* SideBarView.swift */; };
 		45937FB9299B5C7C002F54DD /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FB8299B5C7C002F54DD /* DetailView.swift */; };
 		45937FBB299B5DC5002F54DD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FBA299B5DC5002F54DD /* Filter.swift */; };
+		45B9DB5C299F9A7F00A988AC /* Issue-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B9DB5B299F9A7F00A988AC /* Issue-CoreDataHelpers.swift */; };
+		45B9DB5E299F9C1C00A988AC /* Tag-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B9DB5D299F9C1C00A988AC /* Tag-CoreDataHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		45937FB6299B5C73002F54DD /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		45937FB8299B5C7C002F54DD /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		45937FBA299B5DC5002F54DD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		45B9DB5B299F9A7F00A988AC /* Issue-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Issue-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		45B9DB5D299F9C1C00A988AC /* Tag-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 				45937FAF299B11DB002F54DD /* Main.xcdatamodeld */,
 				45937FB2299B148F002F54DD /* DataController.swift */,
 				45937FBA299B5DC5002F54DD /* Filter.swift */,
+				45B9DB5B299F9A7F00A988AC /* Issue-CoreDataHelpers.swift */,
+				45B9DB5D299F9C1C00A988AC /* Tag-CoreDataHelpers.swift */,
 			);
 			path = SwiftUIPortfolio;
 			sourceTree = "<group>";
@@ -157,7 +163,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				45937FBB299B5DC5002F54DD /* Filter.swift in Sources */,
+				45B9DB5E299F9C1C00A988AC /* Tag-CoreDataHelpers.swift in Sources */,
 				45937FB1299B11DB002F54DD /* Main.xcdatamodeld in Sources */,
+				45B9DB5C299F9A7F00A988AC /* Issue-CoreDataHelpers.swift in Sources */,
 				45937FB9299B5C7C002F54DD /* DetailView.swift in Sources */,
 				45937FB3299B148F002F54DD /* DataController.swift in Sources */,
 				45937FA4299B0E7C002F54DD /* ContentView.swift in Sources */,
