@@ -11,6 +11,11 @@
 		45937FA4299B0E7C002F54DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FA3299B0E7C002F54DD /* ContentView.swift */; };
 		45937FA6299B0E7E002F54DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45937FA5299B0E7E002F54DD /* Assets.xcassets */; };
 		45937FA9299B0E7E002F54DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45937FA8299B0E7E002F54DD /* Preview Assets.xcassets */; };
+		45937FB1299B11DB002F54DD /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45937FAF299B11DB002F54DD /* Main.xcdatamodeld */; };
+		45937FB3299B148F002F54DD /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FB2299B148F002F54DD /* DataController.swift */; };
+		45937FB7299B5C73002F54DD /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FB6299B5C73002F54DD /* SideBarView.swift */; };
+		45937FB9299B5C7C002F54DD /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FB8299B5C7C002F54DD /* DetailView.swift */; };
+		45937FBB299B5DC5002F54DD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45937FBA299B5DC5002F54DD /* Filter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +24,13 @@
 		45937FA3299B0E7C002F54DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		45937FA5299B0E7E002F54DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45937FA8299B0E7E002F54DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		45937FB0299B11DB002F54DD /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
+		45937FB2299B148F002F54DD /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		45937FB4299B5B0B002F54DD /* SwiftUIPortfolio.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftUIPortfolio.entitlements; sourceTree = "<group>"; };
+		45937FB5299B5B15002F54DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		45937FB6299B5C73002F54DD /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
+		45937FB8299B5C7C002F54DD /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		45937FBA299B5DC5002F54DD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +63,17 @@
 		45937FA0299B0E7C002F54DD /* SwiftUIPortfolio */ = {
 			isa = PBXGroup;
 			children = (
+				45937FB5299B5B15002F54DD /* Info.plist */,
+				45937FB4299B5B0B002F54DD /* SwiftUIPortfolio.entitlements */,
 				45937FA1299B0E7C002F54DD /* SwiftUIPortfolioApp.swift */,
+				45937FB6299B5C73002F54DD /* SideBarView.swift */,
 				45937FA3299B0E7C002F54DD /* ContentView.swift */,
+				45937FB8299B5C7C002F54DD /* DetailView.swift */,
 				45937FA5299B0E7E002F54DD /* Assets.xcassets */,
 				45937FA7299B0E7E002F54DD /* Preview Content */,
+				45937FAF299B11DB002F54DD /* Main.xcdatamodeld */,
+				45937FB2299B148F002F54DD /* DataController.swift */,
+				45937FBA299B5DC5002F54DD /* Filter.swift */,
 			);
 			path = SwiftUIPortfolio;
 			sourceTree = "<group>";
@@ -137,7 +156,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45937FBB299B5DC5002F54DD /* Filter.swift in Sources */,
+				45937FB1299B11DB002F54DD /* Main.xcdatamodeld in Sources */,
+				45937FB9299B5C7C002F54DD /* DetailView.swift in Sources */,
+				45937FB3299B148F002F54DD /* DataController.swift in Sources */,
 				45937FA4299B0E7C002F54DD /* ContentView.swift in Sources */,
+				45937FB7299B5C73002F54DD /* SideBarView.swift in Sources */,
 				45937FA2299B0E7C002F54DD /* SwiftUIPortfolioApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,17 +288,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftUIPortfolio/SwiftUIPortfolio.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIPortfolio/Preview Content\"";
 				DEVELOPMENT_TEAM = 433LH3TNXX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftUIPortfolio/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -293,17 +320,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftUIPortfolio/SwiftUIPortfolio.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIPortfolio/Preview Content\"";
 				DEVELOPMENT_TEAM = 433LH3TNXX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftUIPortfolio/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -339,6 +369,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		45937FAF299B11DB002F54DD /* Main.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				45937FB0299B11DB002F54DD /* Main.xcdatamodel */,
+			);
+			currentVersion = 45937FB0299B11DB002F54DD /* Main.xcdatamodel */;
+			path = Main.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 45937F96299B0E7C002F54DD /* Project object */;
 }
