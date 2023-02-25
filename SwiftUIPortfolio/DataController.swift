@@ -11,6 +11,7 @@ import CoreData
 class DataController: ObservableObject {
     
     @Published var selectedFilter: Filter? = .all
+    @Published var selectdIssue: Issue?
     
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
@@ -29,7 +30,7 @@ class DataController: ObservableObject {
         }
         
         // 멀티쓰레드 환경, 다중 기기 환경에서 CoreData의 데이터 일관성을 유지하기 위해 설정
-        // 이 두 줄의 코드는 부모 컨텍스트와 동기화하고, 병합 정책을 설정함으로써 viewContext가 다른 컨텍스트와 일관성 있게 동작할 수 있도록 보장합니다.
+        // 이 두 줄의 코드는 부모 컨텍스트와 동기화하고, 병합 정책을 설정함으로써 viewContext가 다른 컨텍스트와 일관성 있게 동작할 수 있도록 보장.
         // 아래 주석 참고
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
@@ -107,6 +108,21 @@ class DataController: ObservableObject {
         delete(request2)
         
         save()
+    }
+    
+    func missingTags(from issue: Issue) -> [Tag] {
+        let request = Tag.fetchRequest()
+        let allTags = (try? container.viewContext.fetch(request)) ?? []
+        
+        let allTagsSet = Set(allTags)
+        
+        // Set 구조체에서 symmetricDifference(_:) 메서드를 호출하면, 해당 집합과 전달된 집합 사이의 대칭 차집합을 반환합니다.
+        // 예를 들어, let setA: Set = [1, 2, 3]와 let setB: Set = [3, 4, 5] 라는 두 집합이 있을 때,
+        // setA.symmetricDifference(setB)는 [1, 2, 4, 5] 라는 결과를 반환합니다.
+        
+        let difference = allTagsSet.symmetricDifference(issue.issueTags) // issueTags와 allTagsSet의 대칭 차집합을 구함
+        
+        return difference.sorted()
     }
 }
 

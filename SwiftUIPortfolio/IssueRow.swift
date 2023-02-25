@@ -27,7 +27,7 @@ struct IssueRow: View {
                         .font(.headline)
                         .lineLimit(1)
                     
-                    Text("No Tags")
+                    Text(issue.issueTagsList)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                         //.lineLimit(2...2) // 두줄이 되든 안되는 2줄을 채움, iOS 16이상 가능

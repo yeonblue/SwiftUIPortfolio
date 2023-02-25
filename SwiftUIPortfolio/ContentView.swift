@@ -30,7 +30,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        List{
+        List(selection: $dataController.selectdIssue) { // select가 nil일 수도 있으므로 optional이어야 함
             ForEach(issues) { issue in
                 IssueRow(issue: issue)
             }

@@ -33,9 +33,27 @@ extension Issue {
         modificationDate ?? Date.now
     }
     
-    var issueTag: [Tag] {
+    var issueTags: [Tag] {
         let result = tags?.allObjects as? [Tag] ?? []
         return result.sorted()
+    }
+    
+    var issueTagsList: String {
+        guard let tags else { return "No Tags"}
+        
+        if tags.count == 0 {
+            return "No Tags"
+        } else {
+            return issueTags.map(\.tagName).formatted() // 배열을 합쳐서 ,와 한칸씩 띄워서 반환
+        }
+    }
+    
+    var issueStatus: String {
+        if completed {
+            return "Closed"
+        } else {
+            return "Open"
+        }
     }
     
     static var example: Issue {
