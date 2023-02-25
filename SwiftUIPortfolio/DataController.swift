@@ -28,12 +28,30 @@ class DataController: ObservableObject {
             container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
         
+        // 멀티쓰레드 환경, 다중 기기 환경에서 CoreData의 데이터 일관성을 유지하기 위해 설정
+        // 이 두 줄의 코드는 부모 컨텍스트와 동기화하고, 병합 정책을 설정함으로써 viewContext가 다른 컨텍스트와 일관성 있게 동작할 수 있도록 보장합니다.
+        // 아래 주석 참고
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+        
+        // 원격 저장소 변경 사항에 대한 Notification 수신 설정
+        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange,
+                                               object: container.persistentStoreCoordinator,
+                                               queue: .main,
+                                               using: remoteStoreChanged)
+        
         // CoreData에 저장된 목록을 불러옴
         container.loadPersistentStores { storeDescription, error in
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
         }
+    }
+    
+    /// remote 저장소와 sink를 맞추기 위한 함수
+    func remoteStoreChanged(_ notification: Notification) {
+        objectWillChange.send()
     }
     
     func createSampleData() {
@@ -46,7 +64,7 @@ class DataController: ObservableObject {
             
             for j in 1...10 {
                 let issue = Issue(context: viewContext)
-                issue.title = "Issue \(j)"
+                issue.title = "Issue \(i)-\(j)"
                 issue.content = "Description \(j)"
                 issue.creationDate = Date.now
                 issue.completed = Bool.random()
@@ -65,6 +83,7 @@ class DataController: ObservableObject {
     }
     
     func delete(_ object: NSManagedObject) {
+        objectWillChange.send()
         container.viewContext.delete(object)
         save()
     }
@@ -90,3 +109,31 @@ class DataController: ObservableObject {
         save()
     }
 }
+
+/*
+ 1.
+ container.viewContext.automaticallyMergesChangesFromParent = true
+ Core Data에서는 기본적으로 작업하는 context와 그 context의 parent context, 즉 상위 context 간에 변경사항을 서로 복제하거나 merge하는 과정이 필요합니다.
+
+ container.viewContext.automaticallyMergesChangesFromParent = true는 viewContext가 해당 context의 parent context로부터 변경 사항을 자동으로 merge하도록 설정
+ 이 설정을 활성화하면, parent context에서 변경이 발생하면 자동으로 viewContext에 적용되어 뷰에 반영됩니다.
+
+ 예를 들어, viewContext가 메인 스레드에서 작동하는 경우, 백그라운드 스레드에서 작동하는 background context에서 변경이 발생하면,
+ viewContext가 해당 변경사항을 복제하고, 그 결과 뷰에 반영됩니다.
+
+ 하지만 이 설정이 활성화되어 있어도, 동일한 객체를 동시에 여러 개의 context에서 변경하면 충돌이 발생할 수 있습니다.
+ 이런 경우에는 NSMergePolicy를 사용하여 충돌 상황을 처리할 수 있습니다.
+ 
+ 2.
+ NSMergePolicy
+ Core Data는 다중 스레드 환경에서 데이터 변경 작업을 수행할 때 일관성을 유지하기 위한 다양한 정책을 제공합니다. 그 중 하나가 NSMergePolicy입니다.
+
+ NSMergePolicy는 변경 작업 중 발생하는 충돌을 해결하는 데 사용되는 정책입니다.
+ 변경 작업이 발생하는 경우, Core Data는 관련된 모든 객체를 변경 관리 컨텍스트에서 가져와서 업데이트합니다.
+ 그러나 다른 컨텍스트에서 이미 해당 객체를 변경했을 수 있습니다. 이 경우 충돌이 발생하고 NSMergePolicy가 충돌을 해결하는 방법을 결정합니다.
+ 
+ mergeByPropertyStoreTrump는 데이터 저장소의 값이 우선됩니다. (local이 우선, remote는 나중)
+ 즉, 저장소의 값을 유지하고 다른 컨텍스트의 변경 사항은 무시됩니다. 이 정책은 서로 동일한 객체를 수정하는 두 개의 컨텍스트에서 사용될 때 유용합니다.
+ 이 경우에는 마지막으로 변경된 속성이 다른 속성을 덮어씁니다.
+ 이 정책은 데이터의 일관성을 유지하는 데 유용합니다.
+ */

@@ -21,6 +21,11 @@ struct SideBarView: View {
     }
     
     var body: some View {
+        
+        // selectedFilter가 변경됨에 따라 ContentView의 표시되는 데이터도 바뀜
+        // NavigtationLink의 필터 value가 @EnviromentObject로 선언된 DataController의
+        // selectedFitler를 변경시키기에 가능함
+        
         List(selection: $dataController.selectedFilter) {
             Section("Smart Filters") {
                 ForEach(smartFilter) { filter in
@@ -37,6 +42,7 @@ struct SideBarView: View {
                             .badge(filter.tag?.tagActiveIssue.count ?? 0)
                     }
                 }
+                .onDelete(perform: delete)
             }
         }
         .toolbar {
@@ -48,11 +54,20 @@ struct SideBarView: View {
             }
         }
     }
+    
+    func delete(_ offsets: IndexSet) {
+        for offset in offsets {
+            let item = tags[offset]
+            dataController.delete(item)
+        }
+    }
 }
 
 struct SideBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SideBarView()
-            .environmentObject(DataController.preview)
+        NavigationStack {
+            SideBarView()
+                .environmentObject(DataController.preview)
+        }
     }
 }
