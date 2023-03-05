@@ -78,6 +78,20 @@ struct IssueView: View {
             }
         }
         .disabled(issue.isDeleted)
+        .onReceive(issue.objectWillChange) { _ in
+            
+            // onchange는 뷰 내부의 상태(예: @State 변수)가 변경될 때마다 실행되는 클로저입니다.
+            // 이 클로저는 사용자 상호작용(예: 버튼 탭, 텍스트 필드 입력 등)에 응답하는 데 사용될 수 있습니다.
+            
+            // onreceive는 SwiftUI에서 상태 관리를 위해 ObservableObject를 사용할 때 유용합니다.
+            // 이 클로저는 ObservableObject에서 @Published 프로퍼티의 값이 변경될 때마다 실행됩니다.
+            // .onReceive(myObject.$count) { newValue in ..., myObject.objectWillChange()도 동일
+            
+            // 즉 onChange 클로저는 뷰 내부의 @State 변수나 @Binding, @Enviroment 변수 등의 상태가 변경될 때만 호출
+            // 따라서 onChange(issue)는 동작하지 않음을 유의
+            
+            dataController.save()
+        }
     }
 }
 

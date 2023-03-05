@@ -19,6 +19,9 @@ class DataController: ObservableObject {
         return dataController
     }()
     
+    /// 3초마다 CoreData 저장작업을 수행
+    private var saveTask: Task<Void, Error>?
+    
     let container: NSPersistentCloudKitContainer // NSPersistContainer와 달리 CloudKit과도 sync가 가능
     
     init(inMemory: Bool = false) {
@@ -123,6 +126,15 @@ class DataController: ObservableObject {
         let difference = allTagsSet.symmetricDifference(issue.issueTags) // issueTags와 allTagsSet의 대칭 차집합을 구함
         
         return difference.sorted()
+    }
+    
+    func queueSave() {
+        saveTask?.cancel()
+        
+        saveTask = Task { @MainActor in
+            try await Task.sleep(for: .seconds(3))
+            save()
+        }
     }
 }
 
