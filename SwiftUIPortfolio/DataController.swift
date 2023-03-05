@@ -12,6 +12,8 @@ class DataController: ObservableObject {
     
     @Published var selectedFilter: Filter? = .all
     @Published var selectdIssue: Issue?
+    @Published var filterText = ""
+    @Published var filterTokens = [Tag]()
     
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
@@ -21,6 +23,21 @@ class DataController: ObservableObject {
     
     /// 3초마다 CoreData 저장작업을 수행
     private var saveTask: Task<Void, Error>?
+    
+    var suggestedFilterTokens: [Tag] {
+        guard filterText.starts(with: "#") else {
+            return []
+        }
+        
+        let trimmedFilterText = String(filterText.dropFirst()).trimmingCharacters(in: .whitespaces)
+        let request = Tag.fetchRequest()
+        
+        if trimmedFilterText.isEmpty == false {
+            request.predicate = NSPredicate(format: "name CONTAINS[c] %@", trimmedFilterText)
+        }
+        
+        return (try? container.viewContext.fetch(request).sorted()) ?? []
+    }
     
     let container: NSPersistentCloudKitContainer // NSPersistContainer와 달리 CloudKit과도 sync가 가능
     
@@ -126,6 +143,54 @@ class DataController: ObservableObject {
         let difference = allTagsSet.symmetricDifference(issue.issueTags) // issueTags와 allTagsSet의 대칭 차집합을 구함
         
         return difference.sorted()
+    }
+    
+    func issuesForSelectedFilter() -> [Issue] {
+        
+        // NSPredicate와 달리 NSCompoundPredicate는 여러 Predicate를 활용 가능, and. .or, .not 가능
+        // let predicate1 = NSPredicate(format: "name == %@ OR name == %@", "John", "Mary")
+        // let predicate2 = NSPredicate(format: "age >= %@ AND age <= %@", 20, 30)
+        // let compoundPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicate1, predicate2])
+
+        // 아래는 모든 subPredicates를 and로 결합
+        // let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+        
+        let filter = selectedFilter ?? .all
+        var predicates = [NSPredicate]()
+        
+        if let tag = filter.tag {
+            let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
+            predicates.append(tagPredicate)
+        } else {
+            
+            // CoreData는 Swift Type은 지원안하고 Objective-C Type만을 지원하기 때문에 NSDate사용
+            let datePredicate = NSPredicate(format: "modificationDate > %@", filter.minModificatonData as NSDate)
+            predicates.append(datePredicate)
+        }
+        
+        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
+        if trimmedFilterText.isEmpty == false {
+            
+            // [c]는 대소문자 구분을 하지 않는 옵션. 즉, title 속성에는 대소문자를 구분하지 않고 trimmedFilterText 문자열이 포함되어 있는지를 검사
+            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
+            let contentPredicate = NSPredicate(format: "content CONTAINS[c] %@", trimmedFilterText)
+            let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, contentPredicate])
+            predicates.append(combinedPredicate)
+        }
+        
+        // 중복된 태그가 모두 있는지 체크
+        if filterTokens.isEmpty == false {
+            for filterToken in filterTokens {
+                let tokenPredicate = NSPredicate(format: "tags CONTAINS %@", filterToken)
+                predicates.append(tokenPredicate)
+            }
+        }
+        
+        let request = Issue.fetchRequest()
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        
+        let allIssues = (try? container.viewContext.fetch(request)) ?? []
+        return allIssues.sorted()
     }
     
     func queueSave() {
